@@ -2,7 +2,7 @@ import React, { ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from 'react
 
 const sizeClassnames = {
   big: 'py-2 px-6 text-sm rounded-lg',
-  small: 'py-1 px-3 text-sm rounded-lg',
+  small: 'py-1 px-4 text-sm rounded-lg',
 };
 
 const colorClassnames = {
