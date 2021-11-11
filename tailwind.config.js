@@ -69,10 +69,6 @@ module.exports = {
       0: '0px',
       2: '2px',
     },
-    boxShadow: {
-      accent: 'var(--shadow-accent)',
-      1: '0px 4px 14px rgba(0, 0, 0, 0.4)',
-    },
     extend: {
       borderRadius: {
         DEFAULT: '50%',
