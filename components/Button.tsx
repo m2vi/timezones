@@ -23,7 +23,6 @@ export const Button: React.FC<ButtonProps> = ({ children, size = 'big', color = 
     <button
       disabled={disabled}
       className={`${sizeClassnames[size]}  text-button bg-accent hover:bg-accent-hover disabled:text-accent-disabled disabled:bg-accent-hover font-bold flex items-center justify-center ${className}`}
-      data-testid='button'
       {...props}
     >
       <span className={`flex items-center`}>
