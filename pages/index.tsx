@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import Link from 'next/link';
 import Box from '../components/Box';
 import { Button } from '../components/Button';
+import 'slick-carousel/slick/slick.css';
 
 const Home: NextPage = () => {
   return (

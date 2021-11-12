@@ -18,17 +18,21 @@ export type ButtonProps = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonEleme
   transition?: boolean;
 };
 
-export const Button: React.FC<ButtonProps> = ({ children, size = 'big', color = 'primary', disabled, icon, className = '', ...props }) => {
-  return (
-    <button
-      disabled={disabled}
-      className={`${sizeClassnames[size]}  text-button bg-accent hover:bg-accent-hover disabled:text-accent-disabled disabled:bg-accent-hover font-bold flex items-center justify-center ${className}`}
-      {...props}
-    >
-      <span className={`flex items-center`}>
-        {icon ? <span className={`mr-2 items-center`}>{icon}</span> : null}
-        {children}
-      </span>
-    </button>
-  );
-};
+export const Button = React.forwardRef(
+  ({ children, size = 'big', color = 'primary', disabled, icon, className = '', ...props }: ButtonProps, ref) => {
+    return (
+      <button
+        disabled={disabled}
+        className={`${sizeClassnames[size]}  text-button bg-accent hover:bg-accent-hover disabled:text-accent-disabled disabled:bg-accent-hover font-bold flex items-center justify-center ${className}`}
+        {...props}
+      >
+        <span className={`flex items-center`}>
+          {icon ? <span className={`mr-2 items-center`}>{icon}</span> : null}
+          {children}
+        </span>
+      </button>
+    );
+  }
+);
+
+Button.displayName = 'Button';
