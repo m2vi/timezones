@@ -11,6 +11,7 @@ body,
     linear-gradient(var(--color-primary-900) 21px, transparent 1%) 50%, var(--color-primary-600);
   background-size: 22px 22px;
   min-height: 100vh;
+  height: 100%;
 }
 
 html {

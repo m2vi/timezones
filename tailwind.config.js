@@ -1,6 +1,6 @@
 module.exports = {
   darkMode: 'class',
-  purge: ['./**/*.tsx'],
+  content: ['./**/*.tsx'],
   theme: {
     fontSize: {
       tiny: '0.625rem',

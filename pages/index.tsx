@@ -3,18 +3,22 @@ import Link from 'next/link';
 import Box from '../components/Box';
 import { Button } from '../components/Button';
 import 'slick-carousel/slick/slick.css';
+import Head from 'next/head';
 
 const Home: NextPage = () => {
   return (
     <>
-      <div className='h-screen w-full flex items-center justify-center relative'>
-        <Link href='/table' passHref>
+      <Head>
+        <title>Timezones</title>
+      </Head>
+      <Link href='/table'>
+        <a>
           <Button className='absolute top-5 right-5' size='small'>
             Table
           </Button>
-        </Link>
-        <Box />
-      </div>
+        </a>
+      </Link>
+      <Box />
     </>
   );
 };

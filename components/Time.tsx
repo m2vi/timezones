@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from 'moment-timezone';
 import { useEffect, useState } from 'react';
 
 const Time = ({ timezone }: { timezone: string }) => {
@@ -6,17 +6,13 @@ const Time = ({ timezone }: { timezone: string }) => {
   const format = 'HH:mm:ss';
 
   useEffect(() => {
-    setTime(moment().format(format));
+    setTime(moment.tz(timezone).format(format));
     const interval = setInterval(() => {
-      setTime(moment().format(format));
+      setTime(moment.tz(timezone).format(format));
     }, 1000);
     return () => clearInterval(interval);
   }, [timezone]);
-  return (
-    <>
-      <p>Time: {time}</p>
-    </>
-  );
+  return <>{time}</>;
 };
 
 export default Time;
