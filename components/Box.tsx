@@ -32,7 +32,7 @@ const Box: BoxProps = ({ timezones: inArr }) => {
         {moveToFront(moveToFront(timezones, 'Universal', 'timezone'), local, 'timezone').map(({ name, timezone }: TableProps) => (
           <div className='flex flex-col w-full' key={name}>
             <p className='font-bold mb-1'>{`${timezone} (${name})`}</p>
-            <Time timezone={name} />
+            <Time timezone={timezone} />
           </div>
         ))}
       </Slider>
