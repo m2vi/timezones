@@ -1,3 +1,5 @@
+import { TableProps } from '@utils/types';
+import tz from '@utils/tz';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -7,7 +9,7 @@ import Time from '../components/Time';
 import client from '../utils/client';
 
 const Page: NextPage = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<TableProps[]>([]);
 
   useEffect(() => {
     client.table().then(setData);
@@ -44,24 +46,28 @@ const Page: NextPage = () => {
         </div>
 
         <table className='w-full border border-primary-600 bg-primary-900'>
-          <tr className='text-left border border-primary-600'>
-            <th className='p-2 border border-primary-600'>Name</th>
-            <th className='p-2 border border-primary-600'>Timezone</th>
-            <th className='p-2 border border-primary-600'>UTC offset (minutes)</th>
-            <th className='p-2 border border-primary-600'>Time</th>
-          </tr>
-          {data.map(({ name, timezone, offset }, i) => {
-            return (
-              <tr key={i}>
-                <td className='p-2 border border-primary-600'>{timezone}</td>
-                <td className='p-2 border border-primary-600'>{name}</td>
-                <td className='p-2 border border-primary-600'>{offset}</td>
-                <td className='p-2 border border-primary-600'>
-                  <Time timezone={timezone} />
-                </td>
-              </tr>
-            );
-          })}
+          <thead>
+            <tr className='text-left border border-primary-600'>
+              <th className='p-2 border border-primary-600'>Name</th>
+              <th className='p-2 border border-primary-600'>Timezone</th>
+              <th className='p-2 border border-primary-600'>UTC offset (minutes)</th>
+              <th className='p-2 border border-primary-600'>Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data?.map(({ name, timezone, offset }, i) => {
+              return (
+                <tr key={i}>
+                  <td className='p-2 border border-primary-600'>{timezone}</td>
+                  <td className='p-2 border border-primary-600'>{name}</td>
+                  <td className='p-2 border border-primary-600'>{tz.moment.duration(offset, 'minutes').format('m')}</td>
+                  <td className='p-2 border border-primary-600'>
+                    <Time timezone={timezone} />
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
         </table>
       </div>
     </>

@@ -13,3 +13,10 @@ export function moveToFront(list: any[], equalTo: any, path: string) {
     return _.get(x, path) == equalTo ? -1 : _.get(y, path) == equalTo ? 1 : 0;
   });
 }
+
+export function isIterable(obj: any) {
+  if (obj == null) {
+    return false;
+  }
+  return typeof obj[Symbol.iterator] === 'function';
+}

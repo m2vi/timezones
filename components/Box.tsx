@@ -1,12 +1,12 @@
-import moment from 'moment-timezone';
 import Slider, { Settings } from 'react-slick';
 import sift from 'sift';
-import { moveToFront } from '../utils/array';
-import { TableProps } from '../utils/types';
-import tz from '../utils/tz';
-import Time from './Time';
+import _ from 'underscore';
+import { isIterable, moveToFront } from '@utils/array';
+import { BoxProps, TableProps } from '@utils/types';
+import tz from '@utils/tz';
+import Time from '@components/Time';
 
-const Box = () => {
+const Box: BoxProps = ({ timezones: inArr }) => {
   const settings: Settings = {
     dots: true,
     infinite: true,
@@ -16,12 +16,12 @@ const Box = () => {
   };
 
   const table = tz.table();
-  const local = moment.tz.guess();
+  const local = tz.moment.tz.guess();
 
   const timezones = table.filter(
     sift({
       timezone: {
-        $in: [local, 'Universal'],
+        $in: _.unique([local, 'Universal', ...(isIterable(inArr) ? inArr : [])]),
       },
     })
   );

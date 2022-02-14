@@ -1,14 +1,22 @@
 import moment from 'moment-timezone';
 import _ from 'underscore';
-import { TableProps } from './types';
+import { Config, TableProps, Zones } from './types';
+import mongoose from 'mongoose';
+import momentDurationFormatSetup from 'moment-duration-format';
+
+momentDurationFormatSetup(moment as any);
 
 class Tz {
-  private get _zones() {
+  public get moment() {
+    return moment;
+  }
+
+  private get _zones(): Array<Zones> {
     const temp: any = {};
 
     return _.unique(
-      moment.tz.names().map((name) => {
-        const mtz = moment.tz(name);
+      this.moment.tz.names().map((name) => {
+        const mtz = this.moment.tz(name);
 
         const zone = mtz.format('z');
         const offset = mtz.utcOffset();
@@ -20,24 +28,32 @@ class Tz {
     ).map((name) => ({ name, ...temp[name] }));
   }
 
-  private regionName(key: string): string {
-    const names = new Intl.DisplayNames(['en'], { type: 'region' });
-
-    return names.of(key);
-  }
-
-  table(): TableProps[] {
+  public table(): TableProps[] {
     const zones = this._zones;
 
     const newZones: TableProps[] = zones.map(({ zone, name, offset }) => {
       return {
         name: zone,
         timezone: name,
-        offset,
+        offset: offset.toString(),
       };
     });
 
     return newZones;
+  }
+
+  private async config(): Promise<Config> {
+    const db = await mongoose.connect(process.env.MONGO_URI!, { dbName: 'smarthub' });
+
+    const config = await db.connection.collection<Config>('timezones').findOne({ primary: true });
+
+    return config;
+  }
+
+  async boxTimezones(): Promise<string[]> {
+    const config = await this.config();
+
+    return config?.timezones;
   }
 }
 

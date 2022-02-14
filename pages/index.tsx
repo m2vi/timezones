@@ -1,11 +1,13 @@
-import type { NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 import Link from 'next/link';
 import Box from '../components/Box';
 import { Button } from '../components/Button';
 import 'slick-carousel/slick/slick.css';
 import Head from 'next/head';
+import { BoxProps } from '../utils/types';
+import tz from '@utils/tz';
 
-const Home: NextPage = () => {
+const Home: BoxProps = ({ timezones }) => {
   return (
     <>
       <Head>
@@ -18,9 +20,17 @@ const Home: NextPage = () => {
           </Button>
         </a>
       </Link>
-      <Box />
+      <Box timezones={timezones} />
     </>
   );
 };
 
 export default Home;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  return {
+    props: {
+      timezones: await tz.boxTimezones(),
+    },
+  };
+};
